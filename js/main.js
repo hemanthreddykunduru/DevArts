@@ -39,30 +39,23 @@ function initScrollLogic() {
     // Initial Reveal
     initReveal();
 
-    // Navbar CROSSFADE Logic
+    // Navbar CROSSFADE Logic - Portfolio Section Swap
     const navbar = document.querySelector('.navbar-pill');
     const controls = document.querySelector('.slider-controls-custom');
+    const portfolioSection = document.querySelector('#portfolio');
 
-    // Only apply if elements exist
-    if (navbar && controls) {
+    if (controls && portfolioSection) {
         ScrollTrigger.create({
-            trigger: ".slider-controls-custom",
-            start: "top 24px",
-            end: "bottom top",
-            onEnter: () => navbar.classList.add('nav-hidden'),
-            onLeave: () => navbar.classList.remove('nav-hidden'),
-            onEnterBack: () => navbar.classList.add('nav-hidden'),
-            onLeaveBack: () => navbar.classList.remove('nav-hidden')
+            trigger: "#portfolio",
+            start: "top 80px", // Just after header enters
+            end: "bottom bottom", // Stays active until the VERY END of the section
+            toggleClass: { targets: "body", className: "in-portfolio-view" }
+            // CSS handles the rest: hiding navbar, showing controls
         });
     }
 
-    // Hello Modal Trigger (Walkthrough)
-    ScrollTrigger.create({
-        trigger: ".slider-controls-custom",
-        start: "top 75%",
-        once: true, // Only trigger ONCE per session
-        onEnter: () => showWalkthrough()
-    });
+    // Removed Automatic Walkthrough Trigger to prevent "blur thing"
+
 
     // ScrollSpy (Active Link Highlighting + Sliding Pill)
     const sections = ['hero', 'about', 'portfolio', 'contact'];
@@ -192,7 +185,7 @@ async function loadProject(index) {
         setTimeout(() => {
             if (projectDisplay) {
                 projectDisplay.innerHTML = content;
-                
+
                 // Execute Scripts in Injected Content
                 const scripts = projectDisplay.querySelectorAll('script');
                 scripts.forEach(oldScript => {
