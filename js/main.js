@@ -135,7 +135,8 @@ async function initPortfolio() {
         'gamers.html',
         'email_track.html',
         'reinforcement_Learning.html',
-        'tiny_llm.html'
+        'tiny_llm.html',
+        'anocall.html'
     ];
 
     loadProject(0);
