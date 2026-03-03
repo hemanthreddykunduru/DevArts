@@ -7,6 +7,7 @@
     <title>DevArt's — Engineering the Future</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/svg+xml" href="assets/terminal.svg">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
         rel="stylesheet">
@@ -2959,8 +2960,95 @@
 
     <!-- Chat Canvas Layer (Transparent Overlay) -->
     <div id="chat-canvas-layer">
-        <div class="pubble-app" data-app-id="135053" data-app-identifier="135053"></div>
-        <script type="text/javascript" src="https://cdn.chatify.com/javascript/loader.js" defer></script>
+        <div style="position:fixed;bottom:20px;right:20px;font-family:Arial,Helvetica,sans-serif;z-index:9999;">
+
+        <!-- Hidden Toggle -->
+        <input type="checkbox" id="chatToggle" style="display:none;">
+
+        <!-- Floating Button -->
+        <label for="chatToggle" id="chatButton"
+            style="
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            width:72px;
+            height:72px;
+            background:#000;
+            border-radius:50%;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            box-shadow:0 0 15px rgba(255,255,255,0.4),
+                        0 6px 20px rgba(200,200,200,0.3);
+            overflow:hidden;
+            ">
+
+            <img id="chatIcon"
+                src="assets/terminal.svg"
+                style="
+                    width:34px;
+                    height:34px;
+                    filter: brightness(0) invert(1);
+                    transition:all 0.3s ease;
+                ">
+        </label>
+
+        <!-- Chat Window -->
+        <div id="chatBox"
+            style="
+            position:absolute;
+            bottom:85px;
+            right:0;
+            width:270px;
+            background:#fff;
+            border-radius:15px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.2);
+            padding:18px;
+            opacity:0;
+            transform:translateY(20px) scale(0.95);
+            pointer-events:none;
+            transition:all 0.3s ease;
+            ">
+
+            <div style="font-weight:bold;margin-bottom:10px;color:#000;">
+                DevArts Support
+            </div>
+
+            <div style="font-size:14px;color:#333;">
+                Please send your message to:<br><br>
+                <a href="mailto:admin@devarts.in"
+                style="color:#000;font-weight:bold;text-decoration:none;">
+                admin@devarts.in
+                </a>
+            </div>
+        </div>
+
+        <script>
+            const toggle = document.getElementById('chatToggle');
+            const box = document.getElementById('chatBox');
+            const button = document.getElementById('chatButton');
+
+            toggle.addEventListener('change', function() {
+            if (this.checked) {
+                box.style.opacity = "1";
+                box.style.transform = "translateY(0) scale(1)";
+                box.style.pointerEvents = "auto";
+
+                button.style.transform = "rotate(180deg)";
+                button.innerHTML = "✕";
+                button.style.color = "#fff";
+                button.style.fontSize = "28px";
+            } else {
+                box.style.opacity = "0";
+                box.style.transform = "translateY(20px) scale(0.95)";
+                box.style.pointerEvents = "none";
+
+                button.style.transform = "rotate(0deg)";
+                button.innerHTML = '<img src="assets/terminal.svg" style="width:34px;height:34px;filter:brightness(0) invert(1);transition:all 0.3s ease;">';
+            }
+            });
+        </script>
+
+        </div>
     </div>
 
 </body>

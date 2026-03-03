@@ -148,30 +148,32 @@
             <div class="mermaid">
                 graph TD
                 Start["Initialize Q-Network"] --> Epsilon["Epsilon-Greedy Exploration"]
-                Epsilon --> Random{"Random < Epsilon?"} Random -->|Yes| Explore["Random Action Explore"]
-                    Random -->|No| Exploit["Best Action Exploit"]
+                Epsilon --> Random{"Random < Epsilon?"}
+                
+                Random -->|Yes| Explore["Random Action Explore"]
+                Random -->|No| Exploit["Best Action Exploit"]
 
-                    Explore --> Execute["Execute Action"]
-                    Exploit --> Execute
+                Explore --> Execute["Execute Action"]
+                Exploit --> Execute
 
-                    Execute --> Observe["Observe Reward & Next State"]
-                    Observe --> Store["Store in Replay Memory"]
-                    Store --> Sample["Sample Mini-Batch"]
+                Execute --> Observe["Observe Reward & Next State"]
+                Observe --> Store["Store in Replay Memory"]
+                Store --> Sample["Sample Mini-Batch"]
 
-                    Sample --> Compute["Compute Q-Target"]
-                    Compute --> Loss["Calculate Loss MSE"]
-                    Loss --> Backprop["Backpropagation"]
-                    Backprop --> Update["Update Weights"]
+                Sample --> Compute["Compute Q-Target"]
+                Compute --> Loss["Calculate Loss MSE"]
+                Loss --> Backprop["Backpropagation"]
+                Backprop --> Update["Update Weights"]
 
-                    Update --> Decay["Decay Epsilon"]
-                    Decay --> Check{"Episode End?"}
-                    Check -->|No| Epsilon
-                    Check -->|Yes| Save["Save Model"]
+                Update --> Decay["Decay Epsilon"]
+                Decay --> Check{"Episode End?"}
+                Check -->|No| Epsilon
+                Check -->|Yes| Save["Save Model"]
 
-                    style Start fill:#000,stroke:#fff,color:#fff
-                    style Execute fill:#000,stroke:#fff,color:#fff
-                    style Update fill:#000,stroke:#fff,color:#fff
-                    style Save fill:#fff,stroke:#fff,color:#000
+                style Start fill:#000,stroke:#fff,color:#fff
+                style Execute fill:#000,stroke:#fff,color:#fff
+                style Update fill:#000,stroke:#fff,color:#fff
+                style Save fill:#fff,stroke:#fff,color:#000
             </div>
         </div>
 

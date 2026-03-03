@@ -129,14 +129,14 @@ async function initPortfolio() {
 
     // Hardcoded list of project files - add new projects here
     projectFiles = [
-        'chat-with-pdf.html',
-        'image-generation.html',
+        'anocall.html',
         'mitra.html',
-        'gamers.html',
-        'email_track.html',
-        'reinforcement_Learning.html',
+        'image-generation.html',
         'tiny_llm.html',
-        'anocall.html'
+        'email_track.html',
+        'gamers.html',
+        'reinforcement_Learning.html',
+        'chat-with-pdf.html',
     ];
 
     loadProject(0);
