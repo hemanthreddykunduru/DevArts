@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevArt's — Business Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cw: min(460px, 92vw);
+  --ch: calc(var(--cw) * 0.5714);
+  --cr: calc(var(--cw) * 0.038);
+  --p:  calc(var(--cw) * 0.062);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: #000;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+.scene {
+  position: relative;
+  width: var(--cw);
+  height: var(--ch);
+  perspective: 1600px;
+  cursor: pointer;
+}
+
+.card {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.scene:hover .card,
+.scene.flipped .card { transform: rotateY(180deg); }
+
+.face {
+  position: absolute; inset: 0;
+  border-radius: var(--cr);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  box-shadow:
+    0 32px 64px rgba(0,0,0,0.6),
+    0 8px 24px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+}
+
+/* platinum gradient */
+.face::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(135deg,
+    #ebebeb 0%, #d8d0d0 25%, #c0c0c0 50%, #868686 75%, #5e5e5e 100%);
+}
+/* shimmer */
+.face::after {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(105deg,
+    transparent 35%, rgba(255,255,255,0.26) 50%, transparent 65%);
+  background-size: 220% 100%;
+  background-position: 200% 0;
+  animation: sweep 5s ease-in-out infinite;
+}
+@keyframes sweep {
+  0%   { background-position: 200% 0; }
+  50%  { background-position: -20% 0; }
+  100% { background-position: -20% 0; }
+}
+
+.back { transform: rotateY(180deg); }
+
+/* ══ FRONT ══ */
+.front-content {
+  position: absolute; inset: 0; z-index: 2;
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  padding: var(--p);
+  gap: calc(var(--p) * 0.25);
+}
+.front-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.tier {
+  font-size: clamp(6px, 1.4vw, 9px);
+  letter-spacing: 0.2em; color: #555;
+  text-transform: uppercase; font-weight: 700;
+}
+.brand-name {
+  font-size: clamp(12px, 2.9vw, 20px);
+  font-weight: 800; color: #1a1a1a;
+  letter-spacing: 0.22em; line-height: 1.2; margin-top: 2px;
+}
+.contactless { display: flex; flex-direction: column; align-items: flex-end; }
+.wave { border: 1.5px solid #888; border-right: none; border-radius: 50% 0 0 50%; opacity: 0.6; }
+.wave-a { width: clamp(5px,1.1vw,8px);   height: clamp(7px,1.7vw,11px); }
+.wave-b { width: clamp(8px,1.9vw,12px);  height: clamp(12px,2.8vw,18px); margin-top: clamp(-9px,-2.2vw,-14px); }
+.wave-c { width: clamp(12px,2.7vw,17px); height: clamp(18px,4vw,26px);   margin-top: clamp(-14px,-3.2vw,-20px); }
+
+.chip-row { display: flex; align-items: center; gap: clamp(14px, 3.6vw, 24px); }
+.chip {
+  flex-shrink: 0;
+  width: clamp(28px, 6.5vw, 46px); height: clamp(21px, 4.9vw, 34px);
+  border-radius: clamp(3px, 0.7vw, 5px);
+  background: linear-gradient(135deg,
+    #c9a227 0%, #f5e07a 18%, #c9a227 38%, #f5e07a 58%, #c9a227 78%, #f5e07a 100%);
+  border: 1px solid #a88520;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.5);
+  position: relative; overflow: hidden;
+}
+.chip::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg,   transparent, transparent 3px, rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px),
+    repeating-linear-gradient(90deg,  transparent, transparent 3px, rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px);
+}
+.chip::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.45) 0%, transparent 55%, rgba(255,255,255,0.2) 100%);
+}
+.card-number {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(20px, 2.5vw, 18px);
+  font-weight: 700; letter-spacing: clamp(2px, 0.6vw, 5px);
+  color: #1a1a1a; text-shadow: 0 1px 2px rgba(255,255,255,0.55);
+  white-space: nowrap;
+}
+
+.front-bottom { display: flex; align-items: flex-end; gap: clamp(4px, 1.2vw, 12px); }
+.info-group { display: flex; flex-direction: column; gap: 1px; }
+.info-label {
+  font-size: clamp(5px, 1.1vw, 7.5px); color: #5a5a5a;
+  text-transform: uppercase; letter-spacing: 0.13em; font-weight: 700; white-space: nowrap;
+}
+.info-value {
+  font-size: clamp(7.5px, 1.8vw, 13px); color: #1a1a1a;
+  font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap;
+}
+.info-value.name { font-size: clamp(8.5px, 2vw, 14px); }
+.amex-front {
+  font-size: clamp(11px, 2.7vw, 19px); font-weight: 900;
+  color: #0077be; letter-spacing: 0.08em; flex-shrink: 0; line-height: 1;
+}
+
+/* ══ BACK — fully absolute so nothing squishes ══ */
+.back-content { position: absolute; inset: 0; z-index: 2; }
+
+/* 1) mag stripe: 13%–31% from top */
+.mag-stripe {
+  position: absolute;
+  top: 13%; left: 0; right: 0; height: 18%;
+  background: linear-gradient(180deg, #111 0%, #000 50%, #111 100%);
+  box-shadow: inset 0 3px 7px rgba(0,0,0,0.75);
+}
+
+/* 2) sig + cvv: 36%–58% */
+.sig-area {
+  position: absolute;
+  top: 36%; left: var(--p); right: var(--p);
+  display: flex; align-items: flex-start;
+  gap: clamp(6px, 1.5vw, 11px);
+}
+.sig-left { flex: 1; display: flex; flex-direction: column; gap: clamp(2px, 0.6vw, 4px); overflow: hidden; }
+.sig-strip {
+  background: repeating-linear-gradient(325deg,
+    #1a1a1a 0, #1a1a1a 2px, #efefef 2px, #efefef 6px);
+  height: clamp(22px, 5.2vw, 36px);
+  border-radius: 3px; display: flex; align-items: center;
+  padding: 0 clamp(6px, 1.5vw, 12px);
+  border: 1px solid #bbb;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+.sig-text {
+  font-family: 'Brush Script MT', 'Segoe Script', cursive;
+  font-size: clamp(10px, 2.4vw, 17px);
+  color: #111; font-style: italic; font-weight: 600;
+}
+.sig-note {
+  font-size: clamp(4px, 0.92vw, 6.5px); color: #666;
+  font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.cvv-box {
+  flex-shrink: 0;
+  background: linear-gradient(160deg, #fff 0%, #e4e4e4 100%);
+  border: 1px solid #c0c0c0; border-radius: 4px;
+  padding: clamp(3px, 0.8vw, 7px) clamp(5px, 1.3vw, 11px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  align-self: flex-start;
+}
+.cvv-label {
+  font-size: clamp(4.5px, 0.95vw, 7px); color: #555;
+  text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; white-space: nowrap;
+}
+.cvv-value {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(10px, 2.4vw, 16px);
+  color: #000; font-weight: 800;
+  letter-spacing: clamp(2px, 0.5vw, 4px); font-style: italic;
+}
+
+/* 3) contact: 62%–76% */
+.contact-area {
+  position: absolute;
+  top: 62%; left: var(--p); right: var(--p);
+  display: flex; flex-direction: column; gap: clamp(2px, 0.7vw, 5px);
+}
+.contact-row { display: flex; align-items: center; gap: clamp(3px, 0.8vw, 6px); }
+.contact-row svg { flex-shrink: 0; opacity: 0.7; width: clamp(9px,2vw,13px); height: clamp(9px,2vw,13px); }
+.contact-row a {
+  font-size: clamp(6.5px, 1.5vw, 10px); color: #1c1c1c;
+  text-decoration: none; font-weight: 700; letter-spacing: 0.04em; white-space: nowrap;
+}
+
+/* 4) bottom bar: pinned to bottom */
+.back-bottom {
+  position: absolute;
+  bottom: var(--p); left: var(--p); right: var(--p);
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: clamp(5px, 1.3vw, 10px);
+}
+.hologram {
+  flex-shrink: 0;
+  width: clamp(24px, 5.5vw, 40px); height: clamp(24px, 5.5vw, 40px);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 28% 28%, rgba(255,0,255,0.5)  0%, transparent 52%),
+    radial-gradient(circle at 72% 72%, rgba(0,255,255,0.5)  0%, transparent 52%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,0,0.38) 0%, transparent 62%);
+  border: 2px solid rgba(255,255,255,0.55);
+  box-shadow: 0 0 12px rgba(255,255,255,0.35), inset 0 0 12px rgba(255,255,255,0.2);
+  animation: holo 3s linear infinite;
+}
+@keyframes holo {
+  from { filter: hue-rotate(0deg) brightness(1); }
+  to   { filter: hue-rotate(360deg) brightness(1.2); }
+}
+.legal {
+  flex: 1; text-align: center;
+  font-size: clamp(8px, 1.8vw, 10px); color: #888; line-height: 1.55;
+}
+.amex-back {
+  font-size: clamp(10px, 2.4vw, 17px); font-weight: 900;
+  color: #0077be; letter-spacing: 0.08em; flex-shrink: 0; line-height: 1;
+}
+
+/* hint */
+.hint {
+  position: absolute;
+  bottom: calc(var(--p) * -1.5);
+  left: 50%; transform: translateX(-50%);
+  font-size: clamp(7px, 1.3vw, 10px); color: rgba(255,255,255,0.22);
+  letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<div class="scene" id="cardScene" onclick="this.classList.toggle('flipped')">
+  <div class="card">
+
+    <!-- ══ FRONT ══ -->
+    <div class="face front">
+      <div class="front-content">
+        <div class="front-top">
+          <div class="brand-block">
+            <div class="tier">Platinum Card</div>
+            <div class="brand-name">AMERICAN<br>EXPRESS</div>
+          </div>
+          <div class="contactless">
+            <div class="wave wave-a"></div>
+            <div class="wave wave-b"></div>
+            <div class="wave wave-c"></div>
+          </div>
+        </div>
+
+        <div class="chip-row">
+          <div class="chip"></div>
+          <div class="card-number">3782 822463 10005</div>
+        </div>
+
+        <div class="front-bottom">
+          <div class="info-group">
+            <div class="info-label">Member Since</div>
+            <div class="info-value">01/24</div>
+          </div>
+          <div class="info-group" style="flex:1;margin:0 clamp(3px,1vw,10px);">
+            <div class="info-label">Card Holder</div>
+            <div class="info-value name">Hemanth Reddy</div>
+          </div>
+          <div class="info-group" style="text-align:right;">
+            <div class="info-label">Valid Thru</div>
+            <div class="info-value">12/28</div>
+          </div>
+          <div class="amex-front" style="margin-left:clamp(3px,1vw,9px);">AMEX</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ BACK ══ -->
+    <div class="face back">
+      <div class="back-content">
+
+        <div class="mag-stripe"></div>
+
+        <div class="sig-area">
+          <div class="sig-left">
+            <div class="sig-strip">
+              <div class="sig-text">Hemanth Reddy</div>
+            </div>
+            <div class="sig-note">Authorized Signature — Not Valid Unless Signed</div>
+          </div>
+          <div class="cvv-box">
+            <div class="cvv-label">Security Code</div>
+            <div class="cvv-value">4739</div>
+          </div>
+        </div>
+
+        <div class="contact-area">
+          <div class="contact-row">
+            <svg viewBox="0 0 24 24" fill="#1c1c1c">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            <a href="mailto:ping@devarts.in">ping@devarts.in</a>
+          </div>
+          <div class="contact-row">
+            <svg viewBox="0 0 24 24" fill="#1c1c1c">
+              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+            </svg>
+            <a href="tel:+919000000000">+91 9•••••••••</a>
+          </div>
+        </div>
+
+        <div class="back-bottom">
+          <div class="hologram"></div>
+          <div class="legal">This card is property of American Express.<br>If found, return to nearest branch.</div>
+          <div class="amex-back">AMEX</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="hint">Tap / hover to flip</div>
+</div>
+
+</body>
+</html>
