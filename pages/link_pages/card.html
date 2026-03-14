@@ -130,7 +130,7 @@ html, body {
   white-space: nowrap;
 }
 
-.front-bottom { display: flex; align-items: flex-end; gap: clamp(4px, 1.2vw, 12px); }
+.front-bottom { display: flex; align-items: flex-end; gap: clamp(6px, 1.8vw, 20px); }
 .info-group { display: flex; flex-direction: column; gap: 1px; }
 .info-label {
   font-size: clamp(5px, 1.1vw, 7.5px); color: #5a5a5a;
@@ -166,8 +166,7 @@ html, body {
 }
 .sig-left { flex: 1; display: flex; flex-direction: column; gap: clamp(2px, 0.6vw, 4px); overflow: hidden; }
 .sig-strip {
-  background: repeating-linear-gradient(325deg,
-    #1a1a1a 0, #1a1a1a 2px, #efefef 2px, #efefef 6px);
+  background:linear-gradient(160deg, #fff 0%, #e4e4e4 100%);
   height: clamp(22px, 5.2vw, 36px);
   border-radius: 3px; display: flex; align-items: center;
   padding: 0 clamp(6px, 1.5vw, 12px);
@@ -187,7 +186,8 @@ html, body {
 
 .cvv-box {
   flex-shrink: 0;
-  background: linear-gradient(160deg, #fff 0%, #e4e4e4 100%);
+  background: repeating-linear-gradient(325deg,
+    #1a1a1a 0, #1a1a1a 2px, #efefef 2px, #efefef 6px);
   border: 1px solid #c0c0c0; border-radius: 4px;
   padding: clamp(3px, 0.8vw, 7px) clamp(5px, 1.3vw, 11px);
   box-shadow: 0 2px 5px rgba(0,0,0,0.15);
@@ -255,7 +255,7 @@ html, body {
   position: absolute;
   bottom: calc(var(--p) * -1.5);
   left: 50%; transform: translateX(-50%);
-  font-size: clamp(7px, 1.3vw, 10px); color: rgba(255,255,255,0.22);
+  font-size: clamp(7px, 1.3vw, 10px); color: rgba(255,255,255,1);
   letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; pointer-events: none;
 }
 </style>
